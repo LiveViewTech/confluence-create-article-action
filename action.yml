@@ -4,6 +4,9 @@ runs:
   using: docker
   image: Dockerfile
 inputs:
+  space:
+    description: the space key the page will live in
+    required: true
   parent:
     description: the page id in confluence
     required: true
