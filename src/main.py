@@ -26,9 +26,9 @@ content = {
         'key': envs['space']
     },
     'body': {
-        'editor': {
-            'value': '',
-            'representation': 'editor'
+        'storage': {
+            'value': '<h1>Loading...</h1>',
+            'representation': 'storage'
         }
     }
 }
