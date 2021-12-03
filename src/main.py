@@ -8,8 +8,10 @@ workspace = environ.get('GITHUB_WORKSPACE')
 if not workspace:
     raise Exception('No workspace is set')
 
-envs: Dict[str, str] = {}
-for key in ['parent', 'space', 'title', 'cloud', 'user', 'token', 'strict']:
+envs: Dict[str, str] = {
+    'strict': environ.get('INPUT_STRICT')
+}
+for key in ['parent', 'space', 'title', 'cloud', 'user', 'token']:
     value = environ.get(f'INPUT_{key.upper()}')
     if not value:
         raise Exception(f'Missing value for {key}')
