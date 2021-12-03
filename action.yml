@@ -1,0 +1,26 @@
+name: confluence-create-article
+description: create a blank confluence article 
+runs:
+  using: docker
+  image: Dockerfile
+inputs:
+  parent:
+    description: the page id in confluence
+    required: true
+  title:
+    description: the page title
+    required: true
+  cloud:
+    description: atlassian cloud id
+    required: true
+  user:
+    description: username of the token user
+    required: true
+  token:
+    description: token for the user
+    required: true
+outputs:
+  id:
+    description: id of the confluence article
+  url:
+    description: url of the confluence article
