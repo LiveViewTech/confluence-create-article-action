@@ -27,13 +27,13 @@ content = {
     },
     'body': {
         'storage': {
-            'value': '<h1>Loading...</h1>',
+            'value': '',
             'representation': 'storage'
         }
     }
 }
 
-created = requests.put(url, json=content, auth=(envs['user'], envs['token'])).json()
+created = requests.post(url, json=content, auth=(envs['user'], envs['token'])).json()
 id = created['id']
 link = created['_links']['base'] + created['_links']['webui']
 
