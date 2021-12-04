@@ -22,9 +22,6 @@ inputs:
   token:
     description: token for the user
     required: true
-  strict:
-    description: fail if the page already exists
-    required: false
 outputs:
   id:
     description: id of the confluence article
