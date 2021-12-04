@@ -8,9 +8,7 @@ workspace = environ.get('GITHUB_WORKSPACE')
 if not workspace:
     raise Exception('No workspace is set')
 
-envs: Dict[str, str] = {
-    'strict': environ.get('INPUT_STRICT')
-}
+envs: Dict[str, str] = {}
 for key in ['parent', 'space', 'title', 'cloud', 'user', 'token']:
     value = environ.get(f'INPUT_{key.upper()}')
     if not value:
@@ -35,16 +33,24 @@ content = {
     }
 }
 
-try:
-    created = requests.post(url, json=content, auth=(envs['user'], envs['token'])).json()
-    id = created['id']
-    link = created['_links']['base'] + created['_links']['webui']
+search = requests.get('https://liveviewtech.atlassian.net/wiki/rest/api/content',
+    params={'title': envs['title'], 'spaceKey': envs['space']},
+    auth=(envs['user'], envs['token'])).json()
+search_results = search['results']
 
-    print(f'::set-output name=id::{id}')
-    print(f'::set-output name=url::{link}')
+article = None
+if len(search_results) > 0:
+    article = search_results[0]
+else:
+    article = requests.post(url, json=content, auth=(envs['user'], envs['token'])).json()
 
-    print(f'Created new page: {link}')
-except:
-    print("Task failed")
-    if envs['strict'] == "true":
-        raise Exception("A problem occurred when creating the article")
+if article == None:
+    raise Exception("Something went wrong...")
+
+id = article['id']
+link = article['_links']['base'] + article['_links']['webui']
+
+print(f'::set-output name=id::{id}')
+print(f'::set-output name=url::{link}')
+
+print(f'Created new page: {link}')
