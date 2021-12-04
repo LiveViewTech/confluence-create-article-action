@@ -41,6 +41,7 @@ search_results = search['results']
 article = None
 if len(search_results) > 0:
     article = search_results[0]
+    article['_links']['base'] = search['_links']['base']
 else:
     article = requests.post(url, json=content, auth=(envs['user'], envs['token'])).json()
 
